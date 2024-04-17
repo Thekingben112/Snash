@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaltakquise Rechner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="C:\Users\Ben-Robin\Desktop\Code\index.css">
+	<script>
+        function berechneErgebnisse() {
+            var WU = document.getElementById('wu').value;
+            var DW = document.getElementById('dw').value;
+            var statusRadios = document.getElementsByName('status');
+            var status;
+
+            for (var i = 0; i < statusRadios.length; i++) {
+                if (statusRadios[i].checked) {
+                    status = statusRadios[i].value;
+                    break;
+                }
+            }
+
+            var faktoren = {
+                'B': { 'Termin': 30, 'Netto': 20, 'Brutto': 20 },
+                'F': { 'Termin': 50, 'Netto': 25, 'Brutto': 25 },
+                'P': { 'Termin': 60, 'Netto': 30, 'Brutto': 30 },
+            };
+
+            var Abschluss = WU / DW;
+            var Termin = (WU / (faktoren[status]['Termin'] * DW)) * 100;
+            var Netto = (Termin / faktoren[status]['Netto']) * 100;
+            var Brutto = (Netto / faktoren[status]['Brutto']) * 100;
+
+            document.getElementById('abschluss').innerText = Abschluss.toFixed(2);
+            document.getElementById('termin').innerText = Termin.toFixed(2);
+            document.getElementById('netto').innerText = Netto.toFixed(2);
+            document.getElementById('brutto').innerText = Brutto.toFixed(2);
+        }
+
+
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</head>
+
+<body>
+    <div class="main-con">
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'Kaltakquise')">Kaltakquise</button>
+            <button class="tablinks" onclick="openTab(event, 'KaltMails')">Kalt-Mails</button>
+            <button class="tablinks" onclick="openTab(event, 'LinkedInNachrichten')">LinkedIn Nachrichten</button>
+        </div>
+        <hr />
+        <div id="Kaltakquise" class="tabcontent">
+            <h2>Kaltakquise Rechner</h2>
+            <div class="flex-between">
+                <div class="width3-100">
+                    <label for="wu">
+                        <h5>Wunschumsatz in Euro:</h5>
+                    </label>
+                    <input class="extra-bold" type="number" id="wu" name="wu"><br><br>
+                </div>
+                <div class="width3-100">
+                    <label for="dw">
+                        <h5>Durchschnittlicher Warenkorb in Euro:</h5>
+                    </label>
+                    <input class="extra-bold" type="number" id="dw" name="dw"><br><br>
+                </div>
+            </div>
+
+            <div class="flex-between2">
+                <div class="flex3">
+                    <div class="width100">
+                        <div class="flex-between3">
+                            <label for="status">
+                                <h5>Skill-Level:</h5>
+                            </label>
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 192 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                    <path
+                                        d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <!-- <select id="status" name="status">
+                            <option value="B">Beginner</option>
+                            <option value="F">Fortgeschrittener</option>
+                            <option value="P">Profi</option>
+                        </select><br><br> -->
+                        <div class="flex-align mb-10">
+                            <input type="radio" id="beginner" name="status" value="B" checked />
+                            <label for="beginner">
+                                <p>Beginner</p>
+                            </label>
+                        </div>
+                        <div class="flex-align mb-10">
+                            <input type="radio" id="fortgeschrittener" name="status" value="F" />
+                            <label for="fortgeschrittener">
+                                <p>Fortgeschrittener</p>
+                            </label>
+                        </div>
+                        <div class="flex-align mb-10">
+                            <input type="radio" id="profi" name="status" value="P" />
+                            <label for="profi">
+                                <p>Profi</p>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="width3-100">
+                        <button class="btn1" onclick="berechneErgebnisse()">Ergebnisse berechnen</button>
+                    </div>
+                </div>
+                <div class="width3-100">
+                    <div class="mini-con">
+                        <h4 class="mb-10">Ergebnisse:</h4>
+                        <div class="flex-between4">
+                            <div class="min-width5">
+                                <h5 class="m0">Abschlüsse:</h5>
+                                <p class="bold" id="abschluss">0</p>
+                            </div>
+                            <div class="min-width5">
+                                <h5 class="m0">Termine:</h5>
+                                <p class="bold" id="termin">0</p>
+                            </div>
+                        </div>
+                        <div class="flex-between4">
+                            <div class="min-width5">
+                                <h5 class="m0">Netto:</h5>
+                                <p class="bold" id="netto">0</p>
+                            </div>
+                            <div class="min-width5">
+                                <h5 class="m0">Brutto:</h5>
+                                <p class="bold" id="brutto">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="KaltMails" class="tabcontent">
+            <h2>Kalt-Mails</h2>
+            <h5>Rechner für Kalt-Mails kommt hier.</h5>
+        </div>
+
+        <div id="LinkedInNachrichten" class="tabcontent">
+            <h2>LinkedIn Nachrichten</h2>
+            <h5>Rechner für LinkedIn Nachrichten kommt hier.</h5>
+        </div>
+    </div>
+
+    <script>
+        // Standardmäßig den ersten Tab öffnen
+        document.getElementsByClassName('tablinks')[0].click();
+    </script>
+
+</body>
+
+</html>
